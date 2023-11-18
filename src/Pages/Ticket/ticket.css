@@ -1,0 +1,167 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    border: 0;
+}
+
+
+.formulario-ticket{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(116, 22, 116, 0.452);
+    width: 700px;
+    height: 600px;
+    border-radius: 7px;
+    border: solid 1px white;
+}
+
+
+.formulario-ticket h1{
+    text-align: center;
+    color: whitesmoke;
+    margin-top: 12px;
+
+
+}
+
+.input_titulo{
+    position: relative;
+    margin-bottom: 14px;
+    border-radius: 6px;
+    top: 35px;
+    width: 610px;
+    height: 50px;
+    text-align: center;
+    left: 6%;
+    font-size: 23px;
+  font-family: Arial, Helvetica, sans-serif;
+    
+}
+
+.input_descricao {
+    position: relative;
+    margin-bottom: 14px;
+    border-radius: 8px;
+    margin-top: 8px;
+    top: 69px;
+    left: 2.4%;
+    height: 170px;
+    width: 590px;
+    resize: vertical; /* Permite a alteração vertical */
+    overflow-y: auto; /* Adiciona uma barra de rolagem se o conteúdo ultrapassar a área */
+    text-align: center; /* Alinha o texto à esquerda */
+    padding: 5px; /* Adiciona um espaço interno para o texto */
+    width: 95%; /* Ajusta a largura */
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+
+.botao-submit{
+    background-color: blue;
+    color: white;
+    border-radius: 5px;
+    width: 107px;
+    height: 29px;
+    position: absolute;
+    left: 44.8%;
+    top: 540px;
+}
+.botao-submit:hover{
+    cursor: pointer;
+    color: white;
+    background-color: green;
+}
+
+
+
+.dropzone {
+    position: relative;
+    border: 2px dashed gray;
+    top: 78px;
+    border-radius: 8px;
+    margin-top: 5px;
+    height: 94px;
+    width: 630px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    left: 27.5px;
+    color: white;
+    font-size: 18px;
+}
+
+.dropzone p {
+    margin: 0;
+    text-align: center;
+}
+
+.image-preview,
+.video-preview {
+    flex: 0 0 auto; /* Impede que as imagens redimensionem */
+    width: 50px; /* Tamanho das prévias das imagens */
+    height: 50px; /* Tamanho das prévias das imagens */
+    object-fit: cover;
+    margin-right: 5px; /* Adiciona espaçamento entre as imagens */
+    border: 1px solid #ccc;
+}
+
+.thumbs-container {
+    display: flex;
+    flex-wrap: nowrap; /* Impede que as imagens quebrem para a próxima linha */
+    overflow-x: auto; /* Adiciona a barra de rolagem horizontal se necessário */
+    max-width: 100%; /* Define a largura máxima para que as imagens caibam dentro do contêiner */
+    margin-bottom: 10px; /* Adiciona um espaçamento na parte inferior */
+    margin-top: 10px; /* Adiciona um espaçamento na parte superior */
+    padding: 5px; /* Adiciona um preenchimento interno */
+    
+}
+
+.thumbs-container > div {
+    order: 1; /* Define o primeiro item para a primeira posição */
+}
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.65); /* Faz a sobreposição preta com 50% de opacidade */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.overlay-content {
+    text-align: center;
+    background-color: black; /* Fundo preto para a caixa de conteúdo */
+    padding: 20px;
+    border-radius: 8px;
+    color: whitesmoke; /* Cor do texto */
+}
+
+.ticket-container {
+    position: relative;
+}
+
+.close-button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 20px;
+    position: absolute;
+    top: 307px;
+    left: 68.5%;
+    right: 450px;
+    color: rgb(255, 255, 255); /* Define a cor do X como vermelho */
+}
+
+.mensagem-enviada {
+    color: green;
+    text-align: center;
+    margin-top: 10px;
+}
