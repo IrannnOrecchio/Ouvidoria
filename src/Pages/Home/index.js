@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import './style.css'; // Importe um arquivo de estilo CSS
 import { Link } from 'react-router-dom';
-import imagemOuvidoria from '../../assets/ouvidoriaa.png'; // Qualquer nome de variável válido
+import imagemOuvidoria from '../../img/ouvidoriaa.png'; // Qualquer nome de variável válido
 
 function Home() {
   const prefix = "Bem vindo(a) a ouvidoria do grupo ";

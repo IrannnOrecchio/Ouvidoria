@@ -1,26 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import './cadastrar.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../contexts/AuthContext';
-import { toast } from 'react-toastify';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../connectionFirebase';
 
 function Cadastrar() {
   const [mensagemUsuario, setMensagemUsuario] = useState('');
   const [mensagemSenha, setMensagemSenha] = useState('');
-
-  const [nomeUsuario, setNomeUsuario] = useState("")
-  const email = `${nomeUsuario}@seuapp.com`;
-  const [senha, setSenha] = useState("")
-
-  const { Cadastrar, signed } = useContext(AuthContext)
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (signed) {
-      navigate("/ticket")
-    }
-  }, [signed]);
-
+  const navigate = useNavigate();
 
   const mostrarMensagemUsuario = () => {
     setMensagemUsuario('*Lembre-se de guardar seu usuário e senha para logins futuros');
@@ -30,16 +17,27 @@ function Cadastrar() {
     setMensagemSenha('*Lembre-se de guardar seu usuário e senha para logins futuros');
   };
 
-  async function handleRegister(e) {
-    e.preventDefault()
+  const cadastrarUsuario = async (event) => {
+    event.preventDefault();
+    const nomeUsuario = event.target.elements.usuario.value;
+    const senhaInput = event.target.elements.senha.value;
+    const email = `${nomeUsuario}@seuapp.com`;
 
-    if (nomeUsuario !== "" && email !== "" && senha !== "") {
-      await Cadastrar(email, senha, nomeUsuario)
+    try {
+      await createUserWithEmailAndPassword(auth, email, senhaInput);
+      console.log('Usuário criado com sucesso');
+      navigate('/Ticket');
+    } catch (error) {
+      console.error('Erro ao criar usuário:', error.message);
     }
-    else {
-      toast.error("Preencha todos os campos!")
+  };
+
+  const handleKeyPress = (event) => {
+    // Verifica se a tecla pressionada é a tecla "Enter"
+    if (event.key === 'Enter') {
+      cadastrarUsuario(event);
     }
-  }
+  };
 
   useEffect(() => {
     const handlePopState = () => {
@@ -75,7 +73,7 @@ function Cadastrar() {
         Voltar para home
       </Link>
 
-      <form className="Cadastro" onSubmit={handleRegister}>
+      <form className="Cadastro" onSubmit={cadastrarUsuario}>
         <h2>Cadastre-se</h2>
 
         <div className="box">
@@ -87,8 +85,6 @@ function Cadastrar() {
             maxLength="15"
             onFocus={mostrarMensagemUsuario}
             onBlur={() => setMensagemUsuario('')}
-            value={nomeUsuario}
-            onChange={(e) => setNomeUsuario(e.target.value)}
           />
           <p className="mensagem">{mensagemUsuario}</p>
         </div>
@@ -102,8 +98,6 @@ function Cadastrar() {
             maxLength="13"
             onFocus={mostrarMensagemSenha}
             onBlur={() => setMensagemSenha('')}
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
           />
           <p className="mensagem">{mensagemSenha}</p>
         </div>
@@ -116,6 +110,8 @@ function Cadastrar() {
           CADASTRAR
         </button>
 
+        {/* Adiciona o manipulador de evento para a tecla "Enter" no formulário */}
+        <div tabIndex="0" onKeyPress={handleKeyPress} style={{ height: '0', overflow: 'hidden' }}></div>
       </form>
     </div>
   );
