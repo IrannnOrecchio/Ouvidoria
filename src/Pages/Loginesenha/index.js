@@ -1,35 +1,33 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './loginesenha.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../contexts/AuthContext';
-import { toast } from 'react-toastify';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../connectionFirebase';
 
 function Loginesenha() {
-
   const [mensagemErro, setMensagemErro] = useState('');
-  const [nomeUsuario, setNomeUsuario] = useState("")
-  const email = `${nomeUsuario}@seuapp.com`; // Mantém o domínio fictício
-  const [senha, setSenha] = useState("")
+  const navigate = useNavigate();
 
-  const { FazerLogin, signed } = useContext(AuthContext)
-  const navigate = useNavigate()
+  const fazerLogin = async () => {
+    const nomeUsuario = document.getElementsByName('usuario')[0].value;
+    const email = `${nomeUsuario}@seuapp.com`; // Mantém o domínio fictício
+    const senha = document.getElementsByName('senha')[0].value;
 
-  useEffect(() => {
-    if (signed) {
-      navigate("/MeusTickets")
+    try {
+      await signInWithEmailAndPassword(auth, email, senha);
+      navigate('/Ticket');
+    } catch (error) {
+      setMensagemErro('Erro ao fazer login. Verifique seu login e senha.');
+      console.error('Erro ao fazer login:', error.message);
     }
-  }, [signed]);
+  };
 
-
-  async function handleLogin(e) {
-    e.preventDefault()
-
-    if (email !== "" && senha !== "") {
-      await FazerLogin(email, senha)
-    } else {
-      toast.error("Preencha todos os campos!")
+  const handleKeyPress = (event) => {
+    // Verifica se a tecla pressionada é a tecla "Enter"
+    if (event.key === 'Enter') {
+      fazerLogin();
     }
-  }
+  };
 
   return (
     <div>
@@ -37,19 +35,12 @@ function Loginesenha() {
         Voltar para home
       </Link>
 
-      <form className="loginesenha" onSubmit={handleLogin}>
+      <form className="loginesenha" onSubmit={(event) => event.preventDefault()}>
         <h2>Login</h2>
 
         <div className="box">
           <label htmlFor="nome">Usuário</label>
-          <input
-            type="text"
-            name="usuario"
-            required
-            maxLength="15"
-            value={nomeUsuario}
-            onChange={(e) => setNomeUsuario(e.target.value)}
-          />
+          <input type="text" name="usuario" required maxLength="15" />
         </div>
 
         <div className="box">
@@ -59,14 +50,13 @@ function Loginesenha() {
             name="senha"
             required
             maxLength="13"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
+            onKeyPress={handleKeyPress}
           />
         </div>
 
         {mensagemErro && <p className="mensagem-erro error-text">{mensagemErro}</p>}
 
-        <button type="submit" className="entrar">
+        <button type="button" className="entrar" onClick={fazerLogin}>
           <span></span>
           <span></span>
           <span></span>
