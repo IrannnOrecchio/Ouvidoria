@@ -1,7 +1,7 @@
 import './ticket.css';
 import React, { useCallback, useContext, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { auth, db } from '../../connectionFirebase';
+import { auth, db } from '../../services/connectionFirebase';
 import { addDoc, collection } from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
 import { toast } from 'react-toastify';

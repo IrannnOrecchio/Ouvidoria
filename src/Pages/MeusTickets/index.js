@@ -1,6 +1,6 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react"
-import { db } from "../../connectionFirebase";
+import { db } from "../../services/connectionFirebase";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Link } from "react-router-dom";
 import "./MeusTickets.css"
